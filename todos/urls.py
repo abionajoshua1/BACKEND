@@ -1,10 +1,11 @@
 from rest_framework import routers
 from django.urls import path, include
-from .views import UserViewSet, UserRegistrationView, UserLoginView
+from .views import UserViewSet, UserRegistrationView, UserLoginView, TodoViewSet
 
 # Create a router and register our viewset with it.
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
+router.register(r'todos', TodoViewSet)
 
 # The API URLs are now determined automatically by the router.
 

@@ -3,7 +3,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from .models import User
+from .models import User, Todo
+
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -52,6 +53,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         user.save()
         return user
     
+        
+    
+    
 class UserLoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
@@ -72,3 +76,9 @@ class UserLoginSerializer(serializers.Serializer):
             'access': str(refresh.access_token),
             'refresh': str(refresh),
         }
+        
+class TodoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Todo
+        fields = ['title', 'description']
+        

@@ -1,8 +1,8 @@
 from rest_framework import viewsets
 # from rest_framework.response import Response
-
-from .models import User
-from .serializers import UserSerializer, UserLoginSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
+from .models import User, Todo
+from .serializers import UserSerializer, UserLoginSerializer, TodoSerializer
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
@@ -17,6 +17,21 @@ class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        
+        refresh = RefreshToken.for_user(user)
+        tokens = {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token)
+        }
+        
+        response_data = serializer.data
+        response_data.update(tokens)
+        return Response(response_data, status=status.HTTP_201_CREATED)
+        
 class UserLoginView(generics.GenericAPIView):
     serializer_class =  UserLoginSerializer
 
@@ -25,3 +40,6 @@ class UserLoginView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
     
+class TodoViewSet(viewsets.ModelViewSet):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
