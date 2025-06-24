@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 # from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User, Todo
@@ -43,3 +43,10 @@ class UserLoginView(generics.GenericAPIView):
 class TodoViewSet(viewsets.ModelViewSet):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        return Todo.objects.filter(user=self.request.user)
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
