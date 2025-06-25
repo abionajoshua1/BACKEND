@@ -1,4 +1,4 @@
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, filters
 # from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User, Todo
@@ -48,7 +48,11 @@ class TodoViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Todo.objects.filter(user=self.request.user)
     
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['id', 'title']
+    ordering = ['id']
+    
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
         
-    
+        
