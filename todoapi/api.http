@@ -3,6 +3,7 @@ POST http://localhost:8000/api/token/ HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "susan@gmail.com",
-  "password": "test"
+  "username": "miro1",
+  "password": "test",
+  "email": "miro@gmail.com"
 }

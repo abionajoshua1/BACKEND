@@ -18,6 +18,7 @@ mypy_extensions==1.1.0
 packaging==25.0
 pathspec==0.12.1
 platformdirs==4.3.8
+psycopg2-binary==2.9.10
 py3-validate-email==1.0.5.post2
 PyJWT==2.9.0
 pytz==2025.2
