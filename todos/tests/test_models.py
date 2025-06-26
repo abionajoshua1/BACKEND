@@ -6,6 +6,7 @@ class TodoModelTest(TestCase):
         user = User.objects.create_user(
             email="test@gmail.com",
             password="testpassword",
+            username="testuser"
         )
         
         todo = Todo.objects.create(
