@@ -18,4 +18,4 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
-# This will include the URLs for the router and the custom user registration and login views.
+# This will include the URLs for the router and the custom user registration and login views. 
